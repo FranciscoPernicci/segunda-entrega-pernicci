@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ProductList from '../components/ProductList';
-import { productsData } from '../js/data'; // Importa los datos
 
 const ItemListContainer = () => {
   const { category } = useParams();
@@ -10,11 +9,21 @@ const ItemListContainer = () => {
 
   useEffect(() => {
     setLoading(true);
-    const filteredProducts = category
-      ? productsData.filter(product => product.category === category)
-      : productsData;
-    setProducts(filteredProducts);
-    setLoading(false);
+    const fetchProducts = async () => {
+      try {
+        const endpoint = category
+          ? `https://dummyjson.com/products/category/${category}`
+          : `https://dummyjson.com/products`;
+        const res = await fetch(endpoint);
+        const data = await res.json();
+        setProducts(data.products);
+      } catch (error) {
+        console.error("Error al cargar productos:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
   }, [category]);
 
   if (loading) return <p>Cargando productos...</p>;
@@ -23,4 +32,3 @@ const ItemListContainer = () => {
 };
 
 export default ItemListContainer;
-

@@ -10,10 +10,23 @@ const ItemDetailContainer = () => {
 
   useEffect(() => {
     setLoading(true);
-    const selectedProduct = productsData.find((item) => item.id === parseInt(id));
-    setProduct(selectedProduct);
-    setLoading(false);
+  
+    const fetchProduct = async () => {
+      try {
+        const res = await fetch(`https://dummyjson.com/products/${id}`);
+        const data = await res.json();
+        setProduct(data);
+      } catch (error) {
+        console.error("Error al cargar el producto:", error);
+        setProduct(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchProduct();
   }, [id]);
+  
 
   const handleContinueShopping = () => {
     navigate('/'); 
@@ -29,8 +42,9 @@ const ItemDetailContainer = () => {
 
   return (
     <div>
-      <h2>{product.name}</h2>
+      <h2>{product.title}</h2>
       <p>{product.description}</p>
+      <img src={product.thumbnail} alt={product.title} />
       <button onClick={handleContinueShopping}>Seguir Comprando</button>
       <button onClick={handleCheckout}>Finalizar la compra</button>
     </div>
