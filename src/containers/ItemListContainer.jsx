@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import ProductList from '../components/ProductList';
+import ItemList from '../components/ItemList';
+
 
 const ItemListContainer = () => {
   const { category } = useParams();
@@ -28,7 +29,8 @@ const ItemListContainer = () => {
 
   if (loading) return <p>Cargando productos...</p>;
 
-  return <ProductList products={products} />;
+  return <ItemList products={products} />;
+
 };
 
 export default ItemListContainer;

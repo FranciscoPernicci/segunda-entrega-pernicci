@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
 
-const ProductList = ({ products }) => {
+const ItemList = ({ products }) => {
   if (products.length === 0) {
     return <p>No hay productos para mostrar</p>;
   }
@@ -18,4 +18,4 @@ const ProductList = ({ products }) => {
   );
 };
 
-export default ProductList;
+export default ItemList
