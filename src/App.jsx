@@ -5,6 +5,9 @@ import ItemListContainer from "./containers/ItemListContainer";
 import ItemDetailContainer from "./containers/ItemDetailContainer";
 import NotFound from "./components/NotFound"; 
 import { CartProvider } from "./context/CartContext";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 function App() {
   return (

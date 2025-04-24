@@ -1,48 +1,54 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
-import { FaShoppingCart } from "react-icons/fa";
-import "../Navbar.css";
-import { CartContext } from "../context/CartContext";
+import { Link, NavLink } from "react-router-dom";
+import ItemCount from "./ItemCount";
+import { Navbar as BSNavbar, Nav, Container, Dropdown } from "react-bootstrap";
 
-const Navbar = () => {
-  const { cart } = useContext(CartContext);
-  const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await fetch("https://dummyjson.com/products/categories");
-        const data = await res.json();
-        setCategories(data);
-      } catch (error) {
-        console.error("Error al cargar categorías:", error);
-      }
-    };
+function Navbar() {
+  
 
-    fetchCategories();
-  }, []);
 
   return (
-    <nav className="navbar">
-      <h1 className="logo">Electronica, Moda y Más!</h1>
+    <BSNavbar bg="dark" variant="dark" expand="lg">
+      <Container>
+        <BSNavbar.Brand as={Link} to="/">
+          Electronica, Moda y Más!
+        </BSNavbar.Brand>
+        <Nav className="me-auto">
+          <Nav.Link as={Link} to="/">Inicio</Nav.Link>
+          <Dropdown>
+            <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+              Categorías
+            </Dropdown.Toggle>
 
-      <ul className="nav-links">
-        <li><Link to="/">Inicio</Link></li>
-        {categories.map((cat) => (
-        <li key={cat.name}>
-        <Link to={`/category/${cat.name}`}>
-        {cat.name.charAt(0).toUpperCase() + cat.name.slice(1).replace("-", " ")}
-    </Link>
-  </li>
-))}
+            <Dropdown.Menu>
+                <Dropdown.Item 
+                to='/category/cellphones'
+                as={NavLink}>
+                  Cellphones
+              </Dropdown.Item>
+              <Dropdown.Item 
+                to='/category/tvs'
+                as={NavLink}>
+                  Tvs
+              </Dropdown.Item>
+              <Dropdown.Item 
+                to='/category/laptops'
+                as={NavLink}>
+                  Laptops
+              </Dropdown.Item>
+              <Dropdown.Item 
+                to='/category/consoles'
+                as={NavLink}>
+                  Consoles
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Nav>
 
-      </ul>
-
-      <div className="cart-icon">
-        <span>Carrito ({cart.reduce((acc, item) => acc + item.quantity, 0)}) 🛒</span>
-        <FaShoppingCart size={24} />
-      </div>
-    </nav>
+        
+      </Container>
+    </BSNavbar>
   );
 };
 

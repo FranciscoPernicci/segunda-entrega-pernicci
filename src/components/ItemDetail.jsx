@@ -1,16 +1,17 @@
 import React from 'react';
 import ItemCount from './ItemCount';
 
-const ItemDetail = ({ product }) => {
-  return (
-    <div className="product-card">
-      <h2>{product.title}</h2>
-      <img src={product.thumbnail} alt={product.title} style={{ width: '200px' }} />
-      <p>{product.description}</p>
-      <p>Precio: ${product.price}</p>
-      <ItemCount product={product} />
-    </div>
-  );
-};
 
-export default ItemDetail;
+function ItemDetail({detail}){
+  return (
+    <div className = ' d-flex justify-content-center'>
+      <div className ='w-50'>
+      <img src={detail?.image} alt={detail?.name}/>
+      <h3 className='text-ligth'>{detail?.name}</h3>
+      <p className='text-light'>{detail?.description}</p>
+      <ItemCount product={detail}/>
+      </div>
+    </div>)
+  
+}
+export default ItemDetail
