@@ -54,12 +54,12 @@ export const getProduct = async(id)=>{
 }
 
 
-export const createOrder= async() =>{
+export const createOrder = async (order) => {
     try {
-        const docRef = await addDoc(collection(db, "orders"), order);
-        
-        return docRef.id
-      } catch (e) {
-        console.error("Error adding document: ", e);
-      }
-}
+      const docRef = await addDoc(collection(db, "orders"), order);
+      return docRef.id;
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
+  

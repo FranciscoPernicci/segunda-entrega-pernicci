@@ -1,17 +1,21 @@
-import React from 'react';
-import ItemCount from './ItemCount';
+import React from 'react'
+import { Card, Container } from 'react-bootstrap'
+import ItemCount from './ItemCount'
 
-
-function ItemDetail({detail}){
+function ItemDetail({ detail }) {
   return (
-    <div className = ' d-flex justify-content-center'>
-      <div className ='w-50'>
-      <img src={detail?.image} alt={detail?.name}/>
-      <h3 className='text-ligth'>{detail?.name}</h3>
-      <p className='text-light'>{detail?.description}</p>
-      <ItemCount product={detail}/>
-      </div>
-    </div>)
-  
+    <Container className="d-flex justify-content-center mt-4">
+      <Card style={{ width: '40rem' }} className="shadow">
+        <Card.Img variant="top" src={detail?.image} alt={detail?.name} />
+        <Card.Body>
+          <Card.Title>{detail?.name}</Card.Title>
+          <Card.Text>{detail?.description}</Card.Text>
+          <Card.Text><strong>$ {detail?.price}</strong></Card.Text>
+          <ItemCount product={detail} />
+        </Card.Body>
+      </Card>
+    </Container>
+  )
 }
+
 export default ItemDetail

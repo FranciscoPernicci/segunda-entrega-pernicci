@@ -1,55 +1,62 @@
-import React, { useEffect, useState, useContext } from "react";
+import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import ItemCount from "./ItemCount";
 import { Navbar as BSNavbar, Nav, Container, Dropdown } from "react-bootstrap";
-
+import { useCart } from "../context/CartContext";
+import { FaShoppingCart } from "react-icons/fa";
 
 function Navbar() {
-  
-
+  const { totalUnidades } = useCart(); // Trae correctamente la función del contexto
 
   return (
     <BSNavbar bg="dark" variant="dark" expand="lg">
       <Container>
         <BSNavbar.Brand as={Link} to="/">
-          Electronica, Moda y Más!
+          Electronica y Computación.
         </BSNavbar.Brand>
-        <Nav className="me-auto">
-          <Nav.Link as={Link} to="/">Inicio</Nav.Link>
-          <Dropdown>
-            <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-              Categorías
-            </Dropdown.Toggle>
+        <BSNavbar.Toggle aria-controls="basic-navbar-nav" />
+        <BSNavbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/">Inicio</Nav.Link>
+            <Dropdown>
+              <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                Categorías
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item as={NavLink} to="/category/cellphones">Cellphones</Dropdown.Item>
+                <Dropdown.Item as={NavLink} to="/category/tvs">TVs</Dropdown.Item>
+                <Dropdown.Item as={NavLink} to="/category/laptops">Laptops</Dropdown.Item>
+                <Dropdown.Item as={NavLink} to="/category/consoles">Consoles</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Nav>
 
-            <Dropdown.Menu>
-                <Dropdown.Item 
-                to='/category/cellphones'
-                as={NavLink}>
-                  Cellphones
-              </Dropdown.Item>
-              <Dropdown.Item 
-                to='/category/tvs'
-                as={NavLink}>
-                  Tvs
-              </Dropdown.Item>
-              <Dropdown.Item 
-                to='/category/laptops'
-                as={NavLink}>
-                  Laptops
-              </Dropdown.Item>
-              <Dropdown.Item 
-                to='/category/consoles'
-                as={NavLink}>
-                  Consoles
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </Nav>
-
-        
+          {/* Cart Icon a la derecha */}
+          <Nav>
+            <Nav.Link as={Link} to="/cart" style={{ position: "relative" }}>
+              <FaShoppingCart size={30} />
+              {totalUnidades() > 0 && (
+                <span
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    background: "red",
+                    color: "white",
+                    borderRadius: "50%",
+                    padding: "2px 6px",
+                    fontSize: "12px",
+                    transform: "translate(50%, -50%)"
+                  }}
+                >
+                  {totalUnidades()}
+                </span>
+              )}
+            </Nav.Link>
+          </Nav>
+        </BSNavbar.Collapse>
       </Container>
     </BSNavbar>
   );
-};
+}
 
 export default Navbar;

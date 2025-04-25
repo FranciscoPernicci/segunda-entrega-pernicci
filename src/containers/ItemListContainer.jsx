@@ -6,18 +6,18 @@ import { getProducts, filterByCategory } from '../firebase/db';
 const ItemListContainer = () => {
   
   const [products, setProducts] = useState([]);
-  const { id } = useParams()
+  const { category } = useParams()
   
 
   useEffect(() => {
-    if (id) {
-      filterByCategory(id)
+    if (category) {
+      filterByCategory(category)
       .then(data => setProducts(data))
     } else {
       getProducts()
       .then(data => setProducts(data));
     }
-  }, [id]);
+  }, [category]);
 
 
   return <ItemList products={products} />
